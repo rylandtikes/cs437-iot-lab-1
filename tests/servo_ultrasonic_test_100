@@ -1,0 +1,210 @@
+pi@autocar:~ $ python
+Python 2.7.16 (default, Oct 10 2019, 22:02:15) 
+[GCC 8.3.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import os 
+>>> [os.system('picar-4wd test servo') for x in range(100)]
+Welcome to SunFounder PiCar-4WD.
+34.93
+Welcome to SunFounder PiCar-4WD.
+34.86
+Welcome to SunFounder PiCar-4WD.
+34.84
+Welcome to SunFounder PiCar-4WD.
+34.92
+Welcome to SunFounder PiCar-4WD.
+34.89
+Welcome to SunFounder PiCar-4WD.
+34.82
+Welcome to SunFounder PiCar-4WD.
+34.89
+Welcome to SunFounder PiCar-4WD.
+35.35
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+35.34
+Welcome to SunFounder PiCar-4WD.
+34.87
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+35.37
+Welcome to SunFounder PiCar-4WD.
+34.95
+Welcome to SunFounder PiCar-4WD.
+34.93
+Welcome to SunFounder PiCar-4WD.
+34.8
+Welcome to SunFounder PiCar-4WD.
+35.29
+Welcome to SunFounder PiCar-4WD.
+35.39
+Welcome to SunFounder PiCar-4WD.
+35.33
+Welcome to SunFounder PiCar-4WD.
+35.3
+Welcome to SunFounder PiCar-4WD.
+35.38
+Welcome to SunFounder PiCar-4WD.
+35.27
+Welcome to SunFounder PiCar-4WD.
+35.34
+Welcome to SunFounder PiCar-4WD.
+35.38
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+35.39
+Welcome to SunFounder PiCar-4WD.
+35.32
+Welcome to SunFounder PiCar-4WD.
+35.36
+Welcome to SunFounder PiCar-4WD.
+35.67
+Welcome to SunFounder PiCar-4WD.
+35.35
+Welcome to SunFounder PiCar-4WD.
+35.35
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+34.89
+Welcome to SunFounder PiCar-4WD.
+35.36
+Welcome to SunFounder PiCar-4WD.
+35.29
+Welcome to SunFounder PiCar-4WD.
+35.4
+Welcome to SunFounder PiCar-4WD.
+35.33
+Welcome to SunFounder PiCar-4WD.
+35.36
+Welcome to SunFounder PiCar-4WD.
+35.26
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+34.95
+Welcome to SunFounder PiCar-4WD.
+34.91
+Welcome to SunFounder PiCar-4WD.
+35.35
+Welcome to SunFounder PiCar-4WD.
+34.93
+Welcome to SunFounder PiCar-4WD.
+34.87
+Welcome to SunFounder PiCar-4WD.
+34.89
+Welcome to SunFounder PiCar-4WD.
+34.86
+Welcome to SunFounder PiCar-4WD.
+34.88
+Welcome to SunFounder PiCar-4WD.
+34.86
+Welcome to SunFounder PiCar-4WD.
+34.87
+Welcome to SunFounder PiCar-4WD.
+34.94
+Welcome to SunFounder PiCar-4WD.
+35.27
+Welcome to SunFounder PiCar-4WD.
+34.95
+Welcome to SunFounder PiCar-4WD.
+34.91
+Welcome to SunFounder PiCar-4WD.
+35.29
+Welcome to SunFounder PiCar-4WD.
+35.32
+Welcome to SunFounder PiCar-4WD.
+35.41
+Welcome to SunFounder PiCar-4WD.
+35.38
+Welcome to SunFounder PiCar-4WD.
+34.87
+Welcome to SunFounder PiCar-4WD.
+34.82
+Welcome to SunFounder PiCar-4WD.
+34.82
+Welcome to SunFounder PiCar-4WD.
+34.93
+Welcome to SunFounder PiCar-4WD.
+34.93
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+34.94
+Welcome to SunFounder PiCar-4WD.
+35.28
+Welcome to SunFounder PiCar-4WD.
+34.84
+Welcome to SunFounder PiCar-4WD.
+35.32
+Welcome to SunFounder PiCar-4WD.
+34.9
+Welcome to SunFounder PiCar-4WD.
+35.27
+Welcome to SunFounder PiCar-4WD.
+34.86
+Welcome to SunFounder PiCar-4WD.
+35.34
+Welcome to SunFounder PiCar-4WD.
+34.85
+Welcome to SunFounder PiCar-4WD.
+34.9
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+35.38
+Welcome to SunFounder PiCar-4WD.
+35.34
+Welcome to SunFounder PiCar-4WD.
+34.89
+Welcome to SunFounder PiCar-4WD.
+34.84
+Welcome to SunFounder PiCar-4WD.
+34.9
+Welcome to SunFounder PiCar-4WD.
+35.39
+Welcome to SunFounder PiCar-4WD.
+34.9
+Welcome to SunFounder PiCar-4WD.
+34.89
+Welcome to SunFounder PiCar-4WD.
+35.32
+Welcome to SunFounder PiCar-4WD.
+35.39
+Welcome to SunFounder PiCar-4WD.
+35.31
+Welcome to SunFounder PiCar-4WD.
+34.88
+Welcome to SunFounder PiCar-4WD.
+34.88
+Welcome to SunFounder PiCar-4WD.
+34.9
+Welcome to SunFounder PiCar-4WD.
+34.91
+Welcome to SunFounder PiCar-4WD.
+34.88
+Welcome to SunFounder PiCar-4WD.
+35.33
+Welcome to SunFounder PiCar-4WD.
+35.33
+Welcome to SunFounder PiCar-4WD.
+35.34
+Welcome to SunFounder PiCar-4WD.
+35.17
+Welcome to SunFounder PiCar-4WD.
+34.85
+Welcome to SunFounder PiCar-4WD.
+35.37
+Welcome to SunFounder PiCar-4WD.
+34.84
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+>>> 
+>>> 
+
