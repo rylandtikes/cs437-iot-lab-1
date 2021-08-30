@@ -1,0 +1,38 @@
+pi@autocar:~ $ raspistill -v -o test.jpg
+
+"raspistill" Camera App (commit f97b1af1b3e6 Tainted)
+
+Camera Name ov5647
+Width 2592, Height 1944, filename test.jpg
+Using camera 0, sensor mode 0
+
+GPS output Disabled
+
+Quality 85, Raw no
+Thumbnail enabled Yes, width 64, height 48, quality 35
+Time delay 5000, Timelapse 0
+Link to latest frame enabled  no
+Full resolution preview No
+Capture method : Single capture
+
+Preview Yes, Full screen Yes
+Preview window 0,0,1024,768
+Opacity 255
+Sharpness 0, Contrast 0, Brightness 50
+Saturation 0, ISO 0, Video Stabilisation No, Exposure compensation 0
+Exposure Mode 'auto', AWB Mode 'auto', Image Effect 'none'
+Flicker Avoid Mode 'off'
+Metering Mode 'average', Colour Effect Enabled No with U = 128, V = 128
+Rotation 0, hflip No, vflip No
+ROI x 0.000000, y 0.000000, w 1.000000 h 1.000000
+Camera component done
+Encoder component done
+Starting component connection stage
+Connecting camera preview port to video render.
+Connecting camera stills port to encoder input port
+Opening output file test.jpg
+Enabling encoder output port
+Starting capture -1
+Finished capture -1
+Closing down
+Close down completed, all components disconnected, disabled and destroyed
