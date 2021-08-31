@@ -1,0 +1,29 @@
+In [14]: from picar_4wd.ultrasonic import Ultrasonic 
+
+In [15]: from picar_4wd.pin import Pin
+
+In [16]: us = Ultrasonic(Pin('D8'), Pin('D9'))
+
+In [17]: us.get_distance()
+Out[17]: 45.81
+
+In [18]: us.get_distance()
+Out[18]: 75.79
+
+In [19]: us.get_distance()
+Out[19]: 8.81
+
+In [20]: us.get_distance()
+Out[20]: 31.87
+
+In [21]: us.get_distance()
+Out[21]: 59.47
+
+In [22]: us.get_distance()
+Out[22]: 59.48
+
+In [23]: us.get_distance()
+Out[23]: 59.42
+
+In [24]: us.get_distance()
+Out[24]: 59.31
