@@ -10,7 +10,7 @@ from picar_4wd.ultrasonic import Ultrasonic
 from picar_4wd.pin import Pin
 import time
 
-__author__ = "Charles Stolzl"
+__author__ = "Charles Stolz"
 __credits__ = ["sunfounder.com"]
 __email__ = "cstolz2@illinois.edu"
 __status__ = "test"
