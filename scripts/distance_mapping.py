@@ -25,7 +25,7 @@ car_position = (0, 0)
 distances = {}
 
 # This is arbitrary
-thres = 25
+thres = 10 
 
 def test_servo(start, end):
     for angle in range(start, end + 10, 5):
@@ -39,19 +39,28 @@ def get_distance():
     print(f"Distance is {distance}")
     return distance
 
-def interpolate(v1,v2,t):
-    t = (t - v1) / (v2 - v1)
-    return t
+def calculate_slope(x1, x2, y1, y2):
+    slope = (y2 - y1) / (x2 - x1)
+    return slope
 
 def make_map():
     for k,v in distances.items():
         ang = k
         dist = v 
         print(ang, ": ", dist)
-        if(dist > thres):
-            area_map[0][ang] = 1
-        else: 
-            area_map[0][ang] = 0
+        if(dist < thres):
+            area_map[0][ang-5] = 1
+            area_map[0][ang-4] = 1
+            area_map[0][ang-3] = 1
+            area_map[0][ang-2] = 1
+            area_map[0][ang-1] = 1
+        else:
+            area_map[0][ang-5] = 0
+            area_map[0][ang-4] = 0
+            area_map[0][ang-3] = 0
+            area_map[0][ang-2] = 0
+            area_map[0][ang-1] = 0
+    # Just print the first 3 rows for simplicity        
     return print(area_map[0:3])
 
 if __name__ == "__main__":
