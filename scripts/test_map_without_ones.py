@@ -106,7 +106,7 @@ def main():
     # Initial map without the ones between the points
     numpy_array_map = create_map(sensor_readings)
 
-    # Will be used to create to fill in the 1s
+    # Will be used to create second numpy array with ones between the points
     below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
 
     plt.title("Numpy Array Map before addings 1s")
