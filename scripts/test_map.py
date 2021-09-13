@@ -5,7 +5,6 @@ Test case for map
 
 import numpy as np
 import sys
-import math
 import copy
 
 np.set_printoptions(threshold=sys.maxsize)
@@ -21,6 +20,8 @@ __status__ = "test case simulating sensors reading and creating a map"
 NP_ARRAY_SIZE = 180
 
 THRESHOLD = 10
+
+SERVO_STEP = 10
 
 
 def create_map(sensor_readings: list) -> list:
@@ -45,8 +46,6 @@ def calculate_slope(x1, x2, y1, y2):
 def filter_below_threshold(sensor_readings: list) -> list:
     below_threshold = []
     for i in range(0, len(sensor_readings) - 1, 2):
-        if sensor_readings[i]["distance"] == -2:
-            continue
         x1 = sensor_readings[i]["angle"]
         y1 = sensor_readings[i]["distance"]
         x2 = sensor_readings[i + 1]["angle"]
@@ -80,6 +79,44 @@ def add_ones(sensor_readings: list, numpy_array_map: list) -> list:
 
 
 def main():
+    for sensor_readings in [
+        sensor_readings_1,
+        sensor_readings_2,
+        sensor_readings_3,
+        sensor_readings_4,
+        sensor_readings_5,
+        sensor_readings_6,
+        sensor_readings_7,
+        sensor_readings_8,
+        sensor_readings_9,
+        sensor_readings_10,
+        sensor_readings_11,
+    ]:
+        numpy_array_map = create_map(sensor_readings)
+        below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
+
+        x_min, x_max = -90, 90
+        y_min, y_max = 0, 180
+        extent = [x_min, x_max, y_min, y_max]
+        # matplotlib before 1s added
+        plt.title("Numpy Array Map before addings 1s")
+        plt.imshow(numpy_array_map, interpolation="none", extent=extent, origin="lower")
+        plt.show()
+
+        # matplot lib after 1s added
+        numpy_array_ones_added = add_ones(
+            below_threshold_sensor_readings, numpy_array_map
+        )
+
+        plt.title("Numpy Array Map After addings 1s")
+        plt.imshow(
+            numpy_array_ones_added, interpolation="none", extent=extent, origin="lower"
+        )
+        plt.show()
+
+
+if __name__ == "__main__":
+    ## Tests from sensor
     sensor_readings_1 = [
         {"angle": -90, "distance": 91.19},
         {"angle": -85, "distance": 5.92},
@@ -236,37 +273,119 @@ def main():
         {"angle": 70, "distance": -2},
         {"angle": 80, "distance": -2},
     ]
+    sensor_readings_6 = [
+        {"angle": -90, "distance": 90.21},
+        {"angle": -80, "distance": 6.67},
+        {"angle": -70, "distance": 103.83},
+        {"angle": -60, "distance": 104.2},
+        {"angle": -50, "distance": 104.74},
+        {"angle": -40, "distance": 106.19},
+        {"angle": -30, "distance": -2},
+        {"angle": -20, "distance": 121.63},
+        {"angle": -10, "distance": 118.88},
+        {"angle": 0, "distance": 117.93},
+        {"angle": 10, "distance": 117.97},
+        {"angle": 20, "distance": 117.52},
+        {"angle": 30, "distance": 117.82},
+        {"angle": 40, "distance": 118.44},
+        {"angle": 50, "distance": 119.48},
+        {"angle": 60, "distance": 93.89},
+        {"angle": 70, "distance": 91.75},
+        {"angle": 80, "distance": 90.55},
+    ]
+    sensor_readings_7 = [
+        {"angle": -90, "distance": 90.64},
+        {"angle": -80, "distance": 6.66},
+        {"angle": -70, "distance": 103.61},
+        {"angle": -60, "distance": 104.08},
+        {"angle": -50, "distance": 104.63},
+        {"angle": -40, "distance": 106.11},
+        {"angle": -30, "distance": 109.12},
+        {"angle": -20, "distance": 111.55},
+        {"angle": -10, "distance": 7.81},
+        {"angle": 0, "distance": 7.06},
+        {"angle": 10, "distance": 8.01},
+        {"angle": 20, "distance": 7.83},
+        {"angle": 30, "distance": 7.1},
+        {"angle": 40, "distance": 8.86},
+        {"angle": 50, "distance": 6.86},
+        {"angle": 60, "distance": 93.65},
+        {"angle": 70, "distance": 90.96},
+        {"angle": 80, "distance": 90.8},
+    ]
+    sensor_readings_8 = [
+        {"angle": -90, "distance": 96.86},
+        {"angle": -80, "distance": 93.59},
+        {"angle": -70, "distance": 98.16},
+        {"angle": -60, "distance": 96.8},
+        {"angle": -50, "distance": 98.61},
+        {"angle": -40, "distance": 105.19},
+        {"angle": -30, "distance": -2},
+        {"angle": -20, "distance": 38.29},
+        {"angle": -10, "distance": 36.77},
+        {"angle": 0, "distance": 36.28},
+        {"angle": 10, "distance": 36.4},
+        {"angle": 20, "distance": 36.75},
+        {"angle": 30, "distance": 37.67},
+        {"angle": 40, "distance": 38.86},
+        {"angle": 50, "distance": 41.16},
+        {"angle": 60, "distance": 122.61},
+        {"angle": 70, "distance": 98.82},
+        {"angle": 80, "distance": 97.4},
+    ]
 
-    for sensor_readings in [
-        sensor_readings_1,
-        sensor_readings_2,
-        sensor_readings_3,
-        sensor_readings_4,
-        sensor_readings_5,
-    ]:
-        numpy_array_map = create_map(sensor_readings)
-        below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
+    sensor_readings_9 = [
+        {"angle": -90, "distance": 97.02},
+        {"angle": -80, "distance": 93.64},
+        {"angle": -70, "distance": 94.28},
+        {"angle": -60, "distance": 92.14},
+        {"angle": -50, "distance": 97.59},
+        {"angle": -40, "distance": 105.29},
+        {"angle": -30, "distance": -2},
+        {"angle": -20, "distance": -2},
+        {"angle": -10, "distance": -2},
+        {"angle": 0, "distance": -2},
+        {"angle": 10, "distance": -2},
+        {"angle": 20, "distance": -2},
+        {"angle": 30, "distance": -2},
+        {"angle": 40, "distance": -2},
+        {"angle": 50, "distance": -2},
+        {"angle": 60, "distance": 123.52},
+        {"angle": 70, "distance": 99.25},
+        {"angle": 80, "distance": 97.48},
+    ]
+    sensor_readings_10 = [
+        {"angle": -90, "distance": 97.08},
+        {"angle": -80, "distance": 97.11},
+        {"angle": -70, "distance": 97.06},
+        {"angle": -60, "distance": 97.04},
+        {"angle": -50, "distance": 97.46},
+        {"angle": -40, "distance": 98.13},
+        {"angle": -30, "distance": 122.81},
+        {"angle": 50, "distance": 123.46},
+        {"angle": 60, "distance": 123.12},
+        {"angle": 70, "distance": 122.67},
+        {"angle": 80, "distance": 99.46},
+    ]
 
-        plt.title("Numpy Array Map before addings 1s")
-        plt.imshow(
-            numpy_array_map,
-            interpolation="none",
-        )
-        plt.gca().invert_yaxis()
-        plt.show()
-
-        numpy_array_ones_added = add_ones(
-            below_threshold_sensor_readings, numpy_array_map
-        )
-
-        plt.title("Numpy Array Map After addings 1s")
-        plt.imshow(
-            numpy_array_ones_added,
-            interpolation="none",
-        )
-        plt.gca().invert_yaxis()
-        plt.show()
-
-
-if __name__ == "__main__":
+    sensor_readings_11 = [
+        {"angle": -90, "distance": 97.06},
+        {"angle": -80, "distance": 97.16},
+        {"angle": -70, "distance": 97.66},
+        {"angle": -60, "distance": 99.91},
+        {"angle": -50, "distance": 123.34},
+        {"angle": -40, "distance": -2},
+        {"angle": -30, "distance": -2},
+        {"angle": -20, "distance": -2},
+        {"angle": -10, "distance": -2},
+        {"angle": 0, "distance": -2},
+        {"angle": 10, "distance": -2},
+        {"angle": 20, "distance": -2},
+        {"angle": 30, "distance": -2},
+        {"angle": 40, "distance": -2},
+        {"angle": 50, "distance": 123.34},
+        {"angle": 60, "distance": 123.35},
+        {"angle": 70, "distance": 123.28},
+        {"angle": 80, "distance": 122.81},
+    ]
     main()
