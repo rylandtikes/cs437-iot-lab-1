@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """
-Test case for map
+Reads distance from Ultrasonic sensor then builds a 2D map. Plots the map to the
+screen. In order to display in on raspberry pi execute in shell
+export DISPLAY=:0.0
 """
 
 import numpy as np
 import sys
-import math
 import copy
 from picar_4wd.pwm import PWM
 from picar_4wd.filedb import FileDB
@@ -13,11 +14,9 @@ from picar_4wd.servo import Servo
 from picar_4wd.ultrasonic import Ultrasonic
 from picar_4wd.pin import Pin
 import time
-
+import matplotlib.pyplot as plt
 
 np.set_printoptions(threshold=sys.maxsize)
-
-import matplotlib.pyplot as plt
 
 
 __author__ = "Charles Stolz"
@@ -31,6 +30,9 @@ NP_ARRAY_SIZE = 180
 THRESHOLD = 10
 
 SERVO_STEP = 10
+
+# Maximum number of distance readings when -2 is returned
+MAX_DISTANCE_READINGS = 3
 
 # Config File:
 config = FileDB()
@@ -48,8 +50,14 @@ def move_servo(angle):
 
 
 def get_distance():
-    distance = us.get_distance()
-    print(f"Distance is {distance}")
+    number_distance_readings = 0
+    while number_distance_readings < MAX_DISTANCE_READINGS:
+        distance = us.get_distance()
+        print(f"Distance is {distance}")
+        if distance != -2:
+            break
+        number_distance_readings += 1
+    time.sleep(1)
     return distance
 
 
@@ -75,7 +83,6 @@ def calculate_slope(x1, x2, y1, y2):
 def filter_below_threshold(sensor_readings: list) -> list:
     below_threshold = []
     for i in range(0, len(sensor_readings) - 1, 2):
-        # print(sensor_readings[i])
         x1 = sensor_readings[i]["angle"]
         y1 = sensor_readings[i]["distance"]
         x2 = sensor_readings[i + 1]["angle"]
@@ -109,36 +116,36 @@ def add_ones(sensor_readings: list, numpy_array_map: list) -> list:
 
 
 def main():
-
+    servo.set_angle(0)
     sensor_readings = []
     for i in range(0, 180, SERVO_STEP):
         angle = i - 90
         move_servo(angle)
         distance = get_distance()
-        sensor_readings.append({"angle": angle, "distance": distance})
-        time.sleep(1)
+        if distance < 180:
+            sensor_readings.append({"angle": angle, "distance": distance})
 
     numpy_array_map = create_map(sensor_readings)
     below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
 
     print(sensor_readings)
 
+    x_min, x_max = -90, 90
+    y_min, y_max = 0, 180
+    extent = [x_min, x_max, y_min, y_max]
+    # matplotlib before 1s added
     plt.title("Numpy Array Map before addings 1s")
-    plt.imshow(
-        numpy_array_map,
-        interpolation="none",
-    )
-    plt.gca().invert_yaxis()
+    plt.imshow(numpy_array_map, interpolation="none", extent=extent, origin="lower")
     plt.show()
 
+    # matplot lib after 1s added
     numpy_array_ones_added = add_ones(below_threshold_sensor_readings, numpy_array_map)
+    servo.set_angle(0)
 
     plt.title("Numpy Array Map After addings 1s")
     plt.imshow(
-        numpy_array_ones_added,
-        interpolation="none",
+        numpy_array_ones_added, interpolation="none", extent=extent, origin="lower"
     )
-    plt.gca().invert_yaxis()
     plt.show()
 
 
