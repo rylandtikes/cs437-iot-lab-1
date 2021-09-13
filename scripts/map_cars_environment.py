@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """
-Reads distance from Ultrasonic sensor then builds a 2D map. Plots the map to the
-screen. In order to display in on raspberry pi execute in shell
+Measures distance from Ultrasonic sensor then builds a 2D map. Plots the map to the
+screen. In order to display plot on raspberry pi execute in shell. Using VNC 
+viewer with the PI you can see the plots on the screen.
 export DISPLAY=:0.0
 """
 
@@ -31,8 +32,8 @@ THRESHOLD = 10
 
 SERVO_STEP = 10
 
-# Maximum number of distance readings when -2 is returned
-MAX_DISTANCE_READINGS = 3
+# Maximum number of distance trials when -2 is returned
+MAX_DISTANCE_TRIALS = 3
 
 # Config File:
 config = FileDB()
