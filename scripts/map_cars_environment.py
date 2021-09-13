@@ -33,7 +33,7 @@ THRESHOLD = 10
 SERVO_STEP = 10
 
 # Maximum number of distance trials when -2 is returned
-MAX_DISTANCE_TRIALS = 3
+MAX_DISTANCE_READINGS = 3
 
 # Config File:
 config = FileDB()
