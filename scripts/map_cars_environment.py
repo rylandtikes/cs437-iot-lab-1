@@ -46,7 +46,7 @@ servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
 
 
 def move_servo(angle):
-    print(f"testing servo at {angle}")
+    #print(f"testing servo at {angle}")
     servo.set_angle(angle)
 
 
@@ -54,11 +54,11 @@ def get_distance():
     number_distance_readings = 0
     while number_distance_readings < MAX_DISTANCE_READINGS:
         distance = us.get_distance()
-        print(f"Distance is {distance}")
+        #print(f"Distance is {distance}")
         if distance != -2:
             break
         number_distance_readings += 1
-    time.sleep(1)
+    time.sleep(0.1)
     return distance
 
 
@@ -90,11 +90,11 @@ def filter_below_threshold(sensor_readings: list) -> list:
         y2 = sensor_readings[i + 1]["distance"]
         slope = calculate_slope(x1, x2, y1, y2)
         if slope < THRESHOLD:
-            print(sensor_readings[i])
-            print(sensor_readings[i + 1])
-            print(f"{y2} - {y1} / {x2} - {x1}")
-            print(f"add a 1 slope is {slope}")
-            print(slope)
+           #print(sensor_readings[i])
+           # print(sensor_readings[i + 1])
+           # print(f"{y2} - {y1} / {x2} - {x1}")
+           # print(f"add a 1 slope is {slope}")
+           # print(slope)
             below_threshold.append(sensor_readings[i])
             below_threshold.append(sensor_readings[i + 1])
     return below_threshold
@@ -110,7 +110,7 @@ def add_ones(sensor_readings: list, numpy_array_map: list) -> list:
         distance1 = int(sensor_readings[i]["distance"])
         angle2 = int(sensor_readings[i + 1]["angle"])
         distance2 = int(sensor_readings[i + 1]["distance"])
-        print(angle1, angle2)
+        #print(angle1, angle2)
         numpy_array_ones_added[distance1][angle1 + 90 : angle2 + 90] = 1
         numpy_array_ones_added[distance2][angle1 + 90 : angle2 + 90] = 1
     return numpy_array_ones_added
