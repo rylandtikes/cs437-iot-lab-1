@@ -16,13 +16,15 @@ from picar_4wd.ultrasonic import Ultrasonic
 from picar_4wd.pin import Pin
 import time
 import matplotlib.pyplot as plt
+import picar_4wd as fc
+import pprint
 
 np.set_printoptions(threshold=sys.maxsize)
 
 
 __author__ = "Charles Stolz"
 __email__ = "cstolz2@illinois.edu"
-__status__ = "test case simulating sensors reading and creating a map"
+__status__ = "uses a map to navigate car"
 
 # Size of 2D Numpy Array
 NP_ARRAY_SIZE = 180
@@ -48,17 +50,18 @@ servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
 def move_servo(angle):
     print(f"testing servo at {angle}")
     servo.set_angle(angle)
+    time.sleep(0.3)
 
 
 def get_distance():
     number_distance_readings = 0
     while number_distance_readings < MAX_DISTANCE_READINGS:
         distance = us.get_distance()
+        time.sleep(0.3)
         print(f"Distance is {distance}")
         if distance != -2:
             break
         number_distance_readings += 1
-    time.sleep(1)
     return distance
 
 
@@ -110,44 +113,47 @@ def add_ones(sensor_readings: list, numpy_array_map: list) -> list:
         distance1 = int(sensor_readings[i]["distance"])
         angle2 = int(sensor_readings[i + 1]["angle"])
         distance2 = int(sensor_readings[i + 1]["distance"])
-        print(angle1, angle2)
         numpy_array_ones_added[distance1][angle1 + 90 : angle2 + 90] = 1
         numpy_array_ones_added[distance2][angle1 + 90 : angle2 + 90] = 1
     return numpy_array_ones_added
 
 
-def main():
-    servo.set_angle(0)
+def get_sensor_readings():
     sensor_readings = []
     for i in range(0, 180, SERVO_STEP):
         angle = i - 90
         move_servo(angle)
         distance = get_distance()
-        if distance < 180:
+        if distance > 0 and distance < 180:
             sensor_readings.append({"angle": angle, "distance": distance})
+    return sensor_readings
 
-    numpy_array_map = create_map(sensor_readings)
-    below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
 
-    print(sensor_readings)
-
+def create_matplot_lib_map(numpy_array_map, numpy_array_ones_added):
     x_min, x_max = -90, 90
     y_min, y_max = 0, 180
     extent = [x_min, x_max, y_min, y_max]
+
     # matplotlib before 1s added
     plt.title("Numpy Array Map before addings 1s")
     plt.imshow(numpy_array_map, interpolation="none", extent=extent, origin="lower")
     plt.show()
 
     # matplot lib after 1s added
-    numpy_array_ones_added = add_ones(below_threshold_sensor_readings, numpy_array_map)
-    servo.set_angle(0)
-
     plt.title("Numpy Array Map After addings 1s")
     plt.imshow(
         numpy_array_ones_added, interpolation="none", extent=extent, origin="lower"
     )
     plt.show()
+
+
+def main():
+    servo.set_angle(0)
+    sensor_readings = get_sensor_readings()
+    numpy_array_map = create_map(sensor_readings)
+    below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
+    numpy_array_ones_added = add_ones(below_threshold_sensor_readings, numpy_array_map)
+    create_matplot_lib_map(numpy_array_map, numpy_array_ones_added)
 
 
 if __name__ == "__main__":
