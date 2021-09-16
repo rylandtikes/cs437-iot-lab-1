@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Interpolates distance measurements between angle readings 
+Prototype mapping of picar environment 
 """
 
 from picar_4wd.pwm import PWM

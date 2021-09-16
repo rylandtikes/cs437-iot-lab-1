@@ -48,7 +48,7 @@ servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
 
 
 def move_servo(angle):
-    print(f"testing servo at {angle}")
+    #print(f"testing servo at {angle}")
     servo.set_angle(angle)
     time.sleep(0.3)
 
@@ -57,11 +57,15 @@ def get_distance():
     number_distance_readings = 0
     while number_distance_readings < MAX_DISTANCE_READINGS:
         distance = us.get_distance()
-        time.sleep(0.3)
+        if distance != -2:
+            break
+        number_distance_readings += 1
+        time.sleep(0.1)
         print(f"Distance is {distance}")
         if distance != -2:
             break
         number_distance_readings += 1
+
     return distance
 
 
@@ -93,11 +97,11 @@ def filter_below_threshold(sensor_readings: list) -> list:
         y2 = sensor_readings[i + 1]["distance"]
         slope = calculate_slope(x1, x2, y1, y2)
         if slope < THRESHOLD:
-            print(sensor_readings[i])
-            print(sensor_readings[i + 1])
-            print(f"{y2} - {y1} / {x2} - {x1}")
-            print(f"add a 1 slope is {slope}")
-            print(slope)
+           #print(sensor_readings[i])
+           # print(sensor_readings[i + 1])
+           # print(f"{y2} - {y1} / {x2} - {x1}")
+           # print(f"add a 1 slope is {slope}")
+           # print(slope)
             below_threshold.append(sensor_readings[i])
             below_threshold.append(sensor_readings[i + 1])
     return below_threshold
