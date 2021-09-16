@@ -48,7 +48,7 @@ servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
 
 
 def move_servo(angle):
-    #print(f"testing servo at {angle}")
+    print(f"testing servo at {angle}")
     servo.set_angle(angle)
     time.sleep(0.3)
 
@@ -57,15 +57,11 @@ def get_distance():
     number_distance_readings = 0
     while number_distance_readings < MAX_DISTANCE_READINGS:
         distance = us.get_distance()
-        if distance != -2:
-            break
-        number_distance_readings += 1
-        time.sleep(0.1)
+        time.sleep(0.3)
         print(f"Distance is {distance}")
         if distance != -2:
             break
         number_distance_readings += 1
-
     return distance
 
 
@@ -97,11 +93,11 @@ def filter_below_threshold(sensor_readings: list) -> list:
         y2 = sensor_readings[i + 1]["distance"]
         slope = calculate_slope(x1, x2, y1, y2)
         if slope < THRESHOLD:
-           #print(sensor_readings[i])
-           # print(sensor_readings[i + 1])
-           # print(f"{y2} - {y1} / {x2} - {x1}")
-           # print(f"add a 1 slope is {slope}")
-           # print(slope)
+            print(sensor_readings[i])
+            print(sensor_readings[i + 1])
+            print(f"{y2} - {y1} / {x2} - {x1}")
+            print(f"add a 1 slope is {slope}")
+            print(slope)
             below_threshold.append(sensor_readings[i])
             below_threshold.append(sensor_readings[i + 1])
     return below_threshold
@@ -120,6 +116,14 @@ def add_ones(sensor_readings: list, numpy_array_map: list) -> list:
         numpy_array_ones_added[distance1][angle1 + 90 : angle2 + 90] = 1
         numpy_array_ones_added[distance2][angle1 + 90 : angle2 + 90] = 1
     return numpy_array_ones_added
+
+
+def is_path_clear(distance_ahead_in_map, angle_offset, numpy_array) -> bool:
+    reading_at_zero = 90
+    n = 0
+    for a in numpy_array[:distance_ahead_in_map]:
+        n += sum(a[reading_at_zero - angle_offset : reading_at_zero + angle_offset])
+    return n == 0
 
 
 def get_sensor_readings():
@@ -152,11 +156,31 @@ def create_matplot_lib_map(numpy_array_map, numpy_array_ones_added):
 
 
 def main():
-    servo.set_angle(0)
-    sensor_readings = get_sensor_readings()
-    numpy_array_map = create_map(sensor_readings)
-    below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
-    numpy_array_ones_added = add_ones(below_threshold_sensor_readings, numpy_array_map)
+    angle_offset = 25
+    distance_ahead_in_map = 20
+    # setting a limit while refining to break loop
+    speed = 10
+    attempts = 1
+    while attempts:
+        servo.set_angle(0)
+        sensor_readings = get_sensor_readings()
+        numpy_array_map = create_map(sensor_readings)
+        below_threshold_sensor_readings = filter_below_threshold(sensor_readings)
+        numpy_array_ones_added = add_ones(
+            below_threshold_sensor_readings, numpy_array_map
+        )
+        # check if path straight ahead is clear using angle offset
+        if is_path_clear(distance_ahead_in_map, angle_offset, numpy_array_ones_added):
+            fc.forward(speed)
+            time.sleep(0.5)
+            fc.stop()
+        else:
+            fc.backward(speed)
+            time.sleep(0.5)
+            # fc.turn_right(speed)
+            fc.stop()
+        attempts -= 1
+
     create_matplot_lib_map(numpy_array_map, numpy_array_ones_added)
 
 
