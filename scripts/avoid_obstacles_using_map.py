@@ -7,7 +7,6 @@ export DISPLAY=:0.0
 """
 
 import numpy as np
-import sys
 import copy
 from picar_4wd.pwm import PWM
 from picar_4wd.filedb import FileDB
@@ -17,20 +16,13 @@ from picar_4wd.pin import Pin
 import time
 import matplotlib.pyplot as plt
 import picar_4wd as fc
-import pprint
 
-np.set_printoptions(threshold=sys.maxsize)
-
-
-__author__ = "Charles Stolz"
-__email__ = "cstolz2@illinois.edu"
-__status__ = "uses a map to navigate car"
 
 # Size of 2D Numpy Array
 NP_ARRAY_SIZE = 180
 
 # If below the threshold connect the points
-THRESHOLD = 10
+THRESHOLD = 1
 
 SERVO_STEP = 10
 
@@ -48,7 +40,6 @@ servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
 
 
 def move_servo(angle):
-    print(f"testing servo at {angle}")
     servo.set_angle(angle)
     time.sleep(0.3)
 
@@ -57,8 +48,6 @@ def get_distance():
     number_distance_readings = 0
     while number_distance_readings < MAX_DISTANCE_READINGS:
         distance = us.get_distance()
-        time.sleep(0.3)
-        print(f"Distance is {distance}")
         if distance != -2:
             break
         number_distance_readings += 1
@@ -86,20 +75,18 @@ def calculate_slope(x1, x2, y1, y2):
 
 def filter_below_threshold(sensor_readings: list) -> list:
     below_threshold = []
-    for i in range(0, len(sensor_readings) - 1, 2):
-        x1 = sensor_readings[i]["angle"]
-        y1 = sensor_readings[i]["distance"]
-        x2 = sensor_readings[i + 1]["angle"]
-        y2 = sensor_readings[i + 1]["distance"]
+    for i in range(0, len(sensor_readings) - 1):
+        reading1 = sensor_readings[i]
+        reading2 = sensor_readings[i + 1]
+        x1 = reading1["angle"]
+        y1 = reading1["distance"]
+        x2 = reading2["angle"]
+        y2 = reading2["distance"]
         slope = calculate_slope(x1, x2, y1, y2)
-        if slope < THRESHOLD:
-            print(sensor_readings[i])
-            print(sensor_readings[i + 1])
-            print(f"{y2} - {y1} / {x2} - {x1}")
-            print(f"add a 1 slope is {slope}")
-            print(slope)
-            below_threshold.append(sensor_readings[i])
-            below_threshold.append(sensor_readings[i + 1])
+        if abs(slope) < THRESHOLD:
+            if reading1 not in below_threshold:
+                below_threshold.append(reading1)
+            below_threshold.append(reading2)
     return below_threshold
 
 
@@ -132,6 +119,8 @@ def get_sensor_readings():
         angle = i - 90
         move_servo(angle)
         distance = get_distance()
+        if distance == -2:
+            distance = 179
         if distance > 0 and distance < 180:
             sensor_readings.append({"angle": angle, "distance": distance})
     return sensor_readings
@@ -180,7 +169,7 @@ def main():
             # fc.turn_right(speed)
             fc.stop()
         attempts -= 1
-
+    servo.set_angle(0)
     create_matplot_lib_map(numpy_array_map, numpy_array_ones_added)
 
 
