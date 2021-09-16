@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Measures distance from Ultrasonic sensor then builds a 2D map. Plots the map to the
-screen. In order to display plot on raspberry pi execute in shell. Using VNC 
+screen. In order to display plot on raspberry pi execute in shell. Using VNC
 viewer with the PI you can see the plots on the screen.
 export DISPLAY=:0.0
 """
@@ -41,7 +41,7 @@ servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
 
 def move_servo(angle):
     servo.set_angle(angle)
-    time.sleep(0.3)
+    time.sleep(0.1)
 
 
 def get_distance():
@@ -132,9 +132,9 @@ def create_matplot_lib_map(numpy_array_map, numpy_array_ones_added):
     extent = [x_min, x_max, y_min, y_max]
 
     # matplotlib before 1s added
-    plt.title("Numpy Array Map before addings 1s")
-    plt.imshow(numpy_array_map, interpolation="none", extent=extent, origin="lower")
-    plt.show()
+    #plt.title("Numpy Array Map before addings 1s")
+    #plt.imshow(numpy_array_map, interpolation="none", extent=extent, origin="lower")
+    #plt.show()
 
     # matplot lib after 1s added
     plt.title("Numpy Array Map After addings 1s")
@@ -148,7 +148,7 @@ def main():
     angle_offset = 25
     distance_ahead_in_map = 20
     # setting a limit while refining to break loop
-    speed = 10
+    speed = 50
     attempts = 1
     while attempts:
         servo.set_angle(0)
@@ -165,8 +165,18 @@ def main():
             fc.stop()
         else:
             fc.backward(speed)
-            time.sleep(0.5)
-            # fc.turn_right(speed)
+            time.sleep(0.3)
+            fc.turn_left(speed*10)
+            time.sleep(0.3)
+            fc.forward(speed*10)
+            time.sleep(0.3)
+            fc.forward(speed*10)
+            time.sleep(0.3)
+            fc.turn_right(speed*10)
+            time.sleep(0.3)
+            fc.forward(speed*5)
+            time.sleep(0.3)
+            fc.forward(speed*5)
             fc.stop()
         attempts -= 1
     servo.set_angle(0)
